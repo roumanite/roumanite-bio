@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="bg-white dark:bg-gray-900">
+    <section class="dark:bg-gray-900">
       <div class="flex py-8 px-4 mx-auto w-fit text-center lg:py-16">
         <img class="rounded-full w-36 h-36" src="/assets/avatar.png" alt="Extra large avatar">
         <div class="">
@@ -26,3 +26,8 @@
     </section>
   </div>
 </template>
+<style>
+  body {
+    background-image: url('/assets/background.jpg')
+  }
+</style>
