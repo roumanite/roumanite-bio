@@ -9,25 +9,67 @@
   import Types from '../constants/types'
 
   const sprites = []
+  const bunnyWidth = 285
+  const bunnyHeight = 301
+  const previewWidth = 100
+  const previewHeight = 100
+
   onMounted(() => {
     const canvas = document.querySelector("canvas")
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     const tilesheet = loadTilesheet('tilesheet.png', () => {
-      sprites.push({
+      sprites.unshift({
         img: tilesheet,
         x: canvas.width/2 - 285/2,
         y: 0,
         scale: 1,
         sourceX: 0,
         sourceY: 0,
-        sourceWidth: 285,
-        sourceHeight: 301,
+        sourceWidth: bunnyWidth,
+        sourceHeight: bunnyHeight,
         type: Types.IMAGE
       })
     })
+    const originX = canvas.width/2
+    const originY = 0 + bunnyHeight/2
+    const destX = 50
+    const destY = bunnyHeight + 50
+    const midDestX = destX + previewWidth/2
+    const midDestY = destY + previewHeight/2
+    const [xCoords, yCoords] = getDistancedPoints(8, { x1: originX, y1: originY, x2: midDestX, y2: midDestY })
+    const preview = {
+      x: originX - previewWidth/2,
+      y: originY - previewHeight/2,
+      type: Types.RECTANGLE,
+    }
+    sprites.push(preview)
+    xCoords.forEach((x, i) => {
+      setTimeout(() => {
+        preview.x = x - previewWidth/2
+        preview.y = yCoords[i] - previewHeight/2
+      }, 100 * i)
+    })
     update(canvas)
   })
+  const getDistancedPoints = (distance, coords) => {
+    const diffX = coords.x1 - coords.x2
+    const diffY = coords.y1 - coords.y2
+    const intervalX = diffX / (distance + 1)
+    const intervalY = diffY / (distance + 1)
+    const xList = [coords.x1]
+    const yList = [coords.y1]
+
+    for (let i = distance; i >= 0; i--) {
+      xList.push(coords.x2 + intervalX * i)
+      yList.push(coords.y2 + intervalY * i)
+    }
+
+    xList.push(coords.x2)
+    yList.push(coords.y2)
+
+    return [xList, yList]
+  }
   const loadTilesheet = (filename, loadHandler) => {
     const tilesheet = new Image();
     tilesheet.addEventListener("load", loadHandler, false);
@@ -42,15 +84,23 @@
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     sprites.forEach(sprite => {
-      if (sprite.type === Types.IMAGE) {
-        ctx.drawImage(
-          sprite.img,
-          sprite.sourceX, sprite.sourceY,
-          sprite.sourceWidth, sprite.sourceHeight,
-          sprite.x,
-          sprite.y,
-          sprite.sourceWidth * sprite.scale, sprite.sourceHeight * sprite.scale,
-        )
+      switch (sprite.type) {
+        case Types.RECTANGLE:
+          ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'
+          ctx.fillRect(sprite.x, sprite.y, previewWidth, previewHeight)
+          break
+        case Types.IMAGE:
+          ctx.drawImage(
+            sprite.img,
+            sprite.sourceX, sprite.sourceY,
+            sprite.sourceWidth, sprite.sourceHeight,
+            sprite.x,
+            sprite.y,
+            sprite.sourceWidth * sprite.scale, sprite.sourceHeight * sprite.scale,
+          )
+          break
+        default:
+          break
       }
     })
   }
