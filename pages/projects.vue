@@ -42,10 +42,20 @@
         sourceWidth: previewWidth,
         sourceHeight: previewHeight,
         type: Types.IMAGE,
+      }, {
+        img: tilesheet,
+        x: originX - previewWidth/2,
+        y: originY - previewHeight/2,
+        scale: 1,
+        sourceX: 110,
+        sourceY: 413,
+        sourceWidth: previewWidth,
+        sourceHeight: previewHeight,
+        type: Types.IMAGE,
       }]
-      previews.forEach(preview => {
-        const destX = 50
-        const destY = bunnyHeight + 50
+      previews.forEach((preview, previewNo) => {
+        const destX = 50 + previewNo * 150
+        const destY = bunnyHeight + 50 + Math.floor(1/10) * 150
         const midDestX = destX + previewWidth/2
         const midDestY = destY + previewHeight/2
         const [xCoords, yCoords] = getDistancedPoints(8, { x1: originX, y1: originY, x2: midDestX, y2: midDestY })
@@ -53,7 +63,7 @@
           setTimeout(() => {
             preview.x = x - previewWidth/2
             preview.y = yCoords[i] - previewHeight/2
-          }, 100 * i)
+          }, 100 * i + previewNo * 800)
         })
       })
       sprites.push(...previews)
