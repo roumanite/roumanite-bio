@@ -18,10 +18,12 @@
     const canvas = document.querySelector("canvas")
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
+    const originX = canvas.width/2
+    const originY = 0 + bunnyHeight/2
     const tilesheet = loadTilesheet('tilesheet.png', () => {
       sprites.unshift({
         img: tilesheet,
-        x: canvas.width/2 - 285/2,
+        x: canvas.width/2 - bunnyWidth/2,
         y: 0,
         scale: 1,
         sourceX: 0,
@@ -30,25 +32,31 @@
         sourceHeight: bunnyHeight,
         type: Types.IMAGE
       })
-    })
-    const originX = canvas.width/2
-    const originY = 0 + bunnyHeight/2
-    const destX = 50
-    const destY = bunnyHeight + 50
-    const midDestX = destX + previewWidth/2
-    const midDestY = destY + previewHeight/2
-    const [xCoords, yCoords] = getDistancedPoints(8, { x1: originX, y1: originY, x2: midDestX, y2: midDestY })
-    const preview = {
-      x: originX - previewWidth/2,
-      y: originY - previewHeight/2,
-      type: Types.RECTANGLE,
-    }
-    sprites.push(preview)
-    xCoords.forEach((x, i) => {
-      setTimeout(() => {
-        preview.x = x - previewWidth/2
-        preview.y = yCoords[i] - previewHeight/2
-      }, 100 * i)
+      const previews = [{
+        img: tilesheet,
+        x: originX - previewWidth/2,
+        y: originY - previewHeight/2,
+        scale: 1,
+        sourceX: 91,
+        sourceY: 200,
+        sourceWidth: previewWidth,
+        sourceHeight: previewHeight,
+        type: Types.IMAGE,
+      }]
+      previews.forEach(preview => {
+        const destX = 50
+        const destY = bunnyHeight + 50
+        const midDestX = destX + previewWidth/2
+        const midDestY = destY + previewHeight/2
+        const [xCoords, yCoords] = getDistancedPoints(8, { x1: originX, y1: originY, x2: midDestX, y2: midDestY })
+        xCoords.forEach((x, i) => {
+          setTimeout(() => {
+            preview.x = x - previewWidth/2
+            preview.y = yCoords[i] - previewHeight/2
+          }, 100 * i)
+        })
+      })
+      sprites.push(...previews)
     })
     update(canvas)
   })
