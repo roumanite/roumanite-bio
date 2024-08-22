@@ -3,6 +3,9 @@
     Projects
   </h1>
   <canvas></canvas>
+  <div v-if="selected">
+    <h2>{{ selected }}</h2>
+  </div>
 </template>
 <script setup>
   import { onMounted } from 'vue'
@@ -13,11 +16,13 @@
   const bunnyHeight = 301
   const previewWidth = 100
   const previewHeight = 100
+  const selected = useState('selected', () => null)
 
   onMounted(() => {
     const canvas = document.querySelector("canvas")
+    canvas.addEventListener('click', e => handleCanvasClick(e, canvas))
     canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.height = window.innerHeight/2
     const originX = canvas.width/2
     const originY = 0 + bunnyHeight/2
     const tilesheet = loadTilesheet('tilesheet.png', () => {
@@ -42,6 +47,7 @@
         sourceWidth: previewWidth,
         sourceHeight: previewHeight,
         type: Types.IMAGE,
+        title: 'preview 1'
       }, {
         img: tilesheet,
         x: originX - previewWidth/2,
@@ -52,6 +58,7 @@
         sourceWidth: previewWidth,
         sourceHeight: previewHeight,
         type: Types.IMAGE,
+        title: 'preview 2'
       }]
       previews.forEach((preview, previewNo) => {
         const destX = 50 + previewNo * 150
@@ -122,4 +129,13 @@
       }
     })
   }
+  const handleCanvasClick = (e, canvas) => {
+    const x = e.pageX - canvas.offsetLeft - canvas.clientLeft
+    const y = e.pageY - canvas.offsetTop - canvas.clientTop
+    const selectedSprite = sprites.find(sprite => isWithinRectBounds(x, y, sprite.x, sprite.y, sprite.sourceWidth * sprite.scale, sprite.sourceHeight * sprite.scale))
+    if (selectedSprite) {
+      selected.value = selectedSprite.title
+    }
+  }
+  const isWithinRectBounds = (x1, y1, x2, y2, width, height) => x1 > x2 && x1 < x2 + width && y1 > y2 && y1 < y2 + height;
 </script>
