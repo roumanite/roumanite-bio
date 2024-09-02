@@ -1,7 +1,9 @@
 <template>
-  <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-    Projects
-  </h1>
+  <div class="mx-auto w-fit text-center p-6">
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      Projects
+    </h1>
+  </div>
   <canvas></canvas>
   <div v-if="selected">
     <h2 class="mb-4 text-2xl">{{ selected.title }}</h2>

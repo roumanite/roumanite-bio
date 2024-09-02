@@ -12,7 +12,9 @@
       </p>
     </div>
   </section>
-  <SkillsBio />
+  <client-only>
+    <SkillsBio />
+  </client-only>
   <WorkExperienceBio />
   <section class="p-12">
     <h2 class="text-4xl mb-4">Education</h2>
