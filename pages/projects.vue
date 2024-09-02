@@ -4,12 +4,15 @@
   </h1>
   <canvas></canvas>
   <div v-if="selected">
-    <h2>{{ selected }}</h2>
+    <h2 class="mb-4 text-2xl">{{ selected.title }}</h2>
+    <p>{{ selected.description }}</p>
+    <p>{{ selected.link }}</p>
   </div>
 </template>
 <script setup>
   import { onMounted } from 'vue'
   import Types from '../constants/types'
+  import PROJECTS from '../constants/projects'
 
   const sprites = []
   const bunnyWidth = 285
@@ -47,7 +50,7 @@
         sourceWidth: previewWidth,
         sourceHeight: previewHeight,
         type: Types.IMAGE,
-        title: 'preview 1'
+        content: PROJECTS[0]
       }, {
         img: tilesheet,
         x: originX - previewWidth/2,
@@ -58,7 +61,7 @@
         sourceWidth: previewWidth,
         sourceHeight: previewHeight,
         type: Types.IMAGE,
-        title: 'preview 2'
+        content: PROJECTS[1]
       }]
       previews.forEach((preview, previewNo) => {
         const destX = 50 + previewNo * 150
@@ -133,8 +136,8 @@
     const x = e.pageX - canvas.offsetLeft - canvas.clientLeft
     const y = e.pageY - canvas.offsetTop - canvas.clientTop
     const selectedSprite = sprites.find(sprite => isWithinRectBounds(x, y, sprite.x, sprite.y, sprite.sourceWidth * sprite.scale, sprite.sourceHeight * sprite.scale))
-    if (selectedSprite) {
-      selected.value = selectedSprite.title
+    if (selectedSprite && selectedSprite.content) {
+      selected.value = selectedSprite.content
     }
   }
   const isWithinRectBounds = (x1, y1, x2, y2, width, height) => x1 > x2 && x1 < x2 + width && y1 > y2 && y1 < y2 + height;
