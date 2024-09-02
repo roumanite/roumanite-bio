@@ -26,6 +26,10 @@
     canvas.addEventListener('click', e => handleCanvasClick(e, canvas))
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight/2
+    window.onresize = function() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
     const originX = canvas.width/2
     const originY = 0 + bunnyHeight/2
     const tilesheet = loadTilesheet('tilesheet.png', () => {
