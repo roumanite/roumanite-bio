@@ -26,8 +26,3 @@
     </section>
   </div>
 </template>
-<style>
-  body {
-    background-image: url('/assets/background.jpg')
-  }
-</style>

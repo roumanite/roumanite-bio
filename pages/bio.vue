@@ -26,8 +26,3 @@
     <h2 class="text-4xl mb-4">Socials</h2>
   </section>
 </template>
-<style>
-  h1, h2 {
-    font-family: 'Varela Round';
-  }
-</style>
