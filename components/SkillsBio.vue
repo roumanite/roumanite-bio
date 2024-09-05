@@ -11,6 +11,9 @@
         <TabButton id="all">
           All
         </TabButton>
+        <TabButton id="languages">
+          Languages
+        </TabButton>
         <TabButton id="backend-frameworks">
           Backend Frameworks
         </TabButton>
@@ -25,20 +28,33 @@
     <div id="default-tab-content">
       <TabContent id="all">
         <div class="flex gap-4 items-start">
+          <img class="h-20" v-for="item in all" :src="item">
+        </div>
+      </TabContent>
+      <TabContent id="languages">
+        <div class="flex gap-4 items-start">
           <img class="h-20" v-for="language in languages" :src="language">
         </div>
       </TabContent>
       <TabContent id="backend-frameworks">
-        <img class="h-20" v-for="framework in backendFrameworks" :src="framework">
+        <div class="flex gap-4 items-start">
+          <img class="h-20" v-for="framework in backendFrameworks" :src="framework">
+        </div>
       </TabContent>
       <TabContent id="frontend-frameworks">
-        <img class="h-20" v-for="framework in frontendFrameworks" :src="framework">
+        <div class="flex gap-4 items-start">
+          <img class="h-20" v-for="framework in frontendFrameworks" :src="framework">
+        </div>
       </TabContent>
       <TabContent id="cloud">
-        <img class="h-20" v-for="cloudService in cloud" :src="cloudService">
+        <div class="flex gap-4 items-start">
+          <img class="h-20" v-for="cloudService in cloud" :src="cloudService">
+        </div>
       </TabContent>
       <TabContent id="etc">
-        <img class="h-20" v-for="service in etc" :src="service">
+        <div class="flex gap-4 items-start">
+          <img class="h-20" v-for="service in etc" :src="service">
+        </div>
       </TabContent>
     </div>
   </section>
@@ -59,4 +75,5 @@
   const frontendFrameworks = ['react.png', 'reactnative.png']
   const cloud = ['aws.png', 'kubernetes.png']
   const etc = ['rabbitmq.png']
+  const all = languages.concat(backendFrameworks, frontendFrameworks, cloud, etc)
 </script>
