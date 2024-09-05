@@ -1,20 +1,7 @@
 <template>
   <section class="p-12">
     <h2 class="text-4xl mb-4">Work Experience</h2>
-    <ol class="sm:flex">
-      <li class="relative mb-6 sm:mb-0" v-for="experience in experiences">
-        <TimelineHeader />
-        <div class="mt-3 sm:pe-8">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ experience.name }}</h3>
-          <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ experience.date }}</time>
-          <section>
-            <ul>
-              <li v-for="point in experience.points">{{ point }}</li>
-            </ul>
-          </section>
-        </div>
-      </li>
-    </ol>
+    <Timeline :events="experiences" />
   </section>
 </template>
 <script setup>
@@ -32,14 +19,17 @@
       name: 'GotSurge',
       date: 'October 2019 - April 2022',
       points: [
-        'Job description'
+        'Develop microservices for runsheet management and driver broadcasting.',
+        'Stack: Ruby on Rails, Go-gin, MongoDB, PostgreSQL, Elasticsearch, React, Redux, React Native, TypeScript, ActiveMQ, Kafka, Jenkins, Kubernetes'
       ]
     },
     {
       name: 'Sephora SEA',
       date: 'April 2022 - present',
       points: [
-        'Job description'
+        'Ensure smooth customer shopping journey from browsing products to goods delivery, including refund/order cancellation',
+        'Software domain: e-commerce, order management, tracking management, inventory, last mile notification',
+        'Stack: Ruby on Rails, Go, Spring, DynamoDB, PostgreSQL, Elasticsearch, React, Redis, RabbitMQ, Kubernetes'
       ]
     }
   ]
