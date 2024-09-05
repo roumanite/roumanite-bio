@@ -6,37 +6,20 @@
         id="default-tab"
         data-tabs-toggle="#default-tab-content"
         role="tablist"
-        data-tabs-active-classes="text-white bg-blue-600 rounded-lg active"
-        
+        data-tabs-active-classes="border-white border-4 rounded-lg active"
       >
-        <li class="me-2" role="presentation">
-          <button
-          class="inline-block px-4 py-3"
-          id="all-tab" data-tabs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">
-            All
-          </button>
-        </li>
-        <li class="me-2" role="presentation">
-          <button
-          class="inline-block px-4 py-3"
-          id="backend-frameworks-tab" data-tabs-target="#backend-frameworks" type="button" role="tab" aria-controls="backend-frameworks" aria-selected="false">
-            Backend Frameworks
-          </button>
-        </li>
-        <li class="me-2" role="presentation">
-          <button
-          class="inline-block px-4 py-3"
-          id="frontend-frameworks-tab" data-tabs-target="#frontend-frameworks" type="button" role="tab" aria-controls="frontend-frameworks" aria-selected="false">
-            Frontend Frameworks
-          </button>
-        </li>
-        <li role="presentation">
-          <button
-          class="inline-block px-4 py-3"
-          id="cloud-tab" data-tabs-target="#cloud" type="button" role="tab" aria-controls="cloud" aria-selected="false">
-            Cloud
-          </button>
-        </li>
+        <TabButton id="all">
+          All
+        </TabButton>
+        <TabButton id="backend-frameworks">
+          Backend Frameworks
+        </TabButton>
+        <TabButton id="frontend-frameworks">
+          Frontend Frameworks
+        </TabButton>
+        <TabButton id="cloud">
+          Cloud
+        </TabButton>
       </ul>
     </div>
     <div id="default-tab-content">
@@ -46,16 +29,16 @@
         </div>
       </div>
       <div class="hidden" id="backend-frameworks" role="tabpanel" aria-labelledby="backend-frameworks-tab">
-        <img class="h-24" v-for="framework in backendFrameworks" :src="framework">
+        <img class="h-20" v-for="framework in backendFrameworks" :src="framework">
       </div>
       <div class="hidden" id="frontend-frameworks" role="tabpanel" aria-labelledby="frontend-frameworks-tab">
-        <img class="h-24" v-for="framework in frontendFrameworks" :src="framework">
+        <img class="h-20" v-for="framework in frontendFrameworks" :src="framework">
       </div>
       <div class="hidden" id="cloud" role="tabpanel" aria-labelledby="cloud-tab">
-        <img class="h-24" v-for="cloudService in cloud" :src="cloudService">
+        <img class="h-20" v-for="cloudService in cloud" :src="cloudService">
       </div>
       <div class="hidden" id="etc" role="tabpanel" aria-labelledby="etc-tab">
-        <img class="h-24" v-for="service in etc" :src="service">
+        <img class="h-20" v-for="service in etc" :src="service">
       </div>
     </div>
   </section>
