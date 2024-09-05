@@ -23,23 +23,23 @@
       </ul>
     </div>
     <div id="default-tab-content">
-      <div class="hidden" id="all" role="tabpanel" aria-labelledby="all-tab">
+      <TabContent id="all">
         <div class="flex gap-4 items-start">
           <img class="h-20" v-for="language in languages" :src="language">
         </div>
-      </div>
-      <div class="hidden" id="backend-frameworks" role="tabpanel" aria-labelledby="backend-frameworks-tab">
+      </TabContent>
+      <TabContent id="backend-frameworks">
         <img class="h-20" v-for="framework in backendFrameworks" :src="framework">
-      </div>
-      <div class="hidden" id="frontend-frameworks" role="tabpanel" aria-labelledby="frontend-frameworks-tab">
+      </TabContent>
+      <TabContent id="frontend-frameworks">
         <img class="h-20" v-for="framework in frontendFrameworks" :src="framework">
-      </div>
-      <div class="hidden" id="cloud" role="tabpanel" aria-labelledby="cloud-tab">
+      </TabContent>
+      <TabContent id="cloud">
         <img class="h-20" v-for="cloudService in cloud" :src="cloudService">
-      </div>
-      <div class="hidden" id="etc" role="tabpanel" aria-labelledby="etc-tab">
+      </TabContent>
+      <TabContent id="etc">
         <img class="h-20" v-for="service in etc" :src="service">
-      </div>
+      </TabContent>
     </div>
   </section>
 </template>
