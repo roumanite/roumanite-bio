@@ -15,12 +15,16 @@
           </p>
         </div>
       </div>
-      <div>
+      <div class="flex justify-center gap-16">
         <NuxtLink to="/bio">
-          Bio
+          <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900 dark:text-white">
+            Bio
+          </h1>
         </NuxtLink>
         <NuxtLink to="/projects">
-          Projects
+          <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900 dark:text-white">
+            Projects
+          </h1>
         </NuxtLink>
         <!--
         <NuxtLink to="/blog">
