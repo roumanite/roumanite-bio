@@ -6,8 +6,10 @@
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ event.name }}</h3>
         <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ event.date }}</time>
         <section>
-          <ul>
-            <li v-for="point in event.points">{{ point }}</li>
+          <ul class="list-disc">
+            <li v-for="point in event.points">
+              {{ point }}
+            </li>
           </ul>
         </section>
       </div>
