@@ -5,10 +5,20 @@
     </h1>
   </div>
   <canvas></canvas>
-  <div v-if="selected">
+  <div class="px-16 pb-16" v-if="selected">
     <h2 class="mb-4 text-2xl">{{ selected.title }}</h2>
-    <p>{{ selected.description }}</p>
-    <p>{{ selected.link }}</p>
+    <p>
+      {{ selected.description }}
+    </p>
+    <p>
+      <a
+        class="text-sky-500"
+        target="_blank"
+        :href="selected.link"
+      >
+        Give it a try
+      </a>
+    </p>
   </div>
 </template>
 <script setup>
@@ -27,10 +37,9 @@
     const canvas = document.querySelector("canvas")
     canvas.addEventListener('click', e => handleCanvasClick(e, canvas))
     canvas.width = window.innerWidth
-    canvas.height = window.innerHeight/2
+    canvas.height = 500
     window.onresize = function() {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
     }
     const originX = canvas.width/2
     const originY = 0 + bunnyHeight/2
