@@ -25,7 +25,7 @@
       href="https://www.linkedin.com/in/madyarini-grace-ariel-aa7741181/"
       target="_blank"
     >
-      <img class="w-10" src="/assets/linkedin.png" alt="Linkedin logo">
+      <img class="inline-block w-10" src="/assets/linkedin.png" alt="Linkedin logo">
     </a>
   </section>
 </template>
