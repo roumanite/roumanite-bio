@@ -22,9 +22,11 @@
         <NuxtLink to="/projects">
           Projects
         </NuxtLink>
+        <!--
         <NuxtLink to="/blog">
           Blog
         </NuxtLink>
+        -->
       </div>
     </section>
   </div>
