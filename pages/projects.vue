@@ -27,8 +27,8 @@
   import PROJECTS from '../constants/projects'
 
   const sprites = []
-  const bunnyWidth = 285
-  const bunnyHeight = 301
+  const bunnyWidth = 237
+  const bunnyHeight = 297
   const previewWidth = 100
   const previewHeight = 100
   const selected = useState('selected', () => null)
@@ -42,7 +42,7 @@
       canvas.width = window.innerWidth;
     }
     const originX = canvas.width/2
-    const originY = 0 + bunnyHeight/2
+    const originY = 0 + bunnyHeight/1.2
     const tilesheet = loadTilesheet('tilesheet.png', () => {
       sprites.unshift({
         img: tilesheet,
@@ -59,22 +59,22 @@
         img: tilesheet,
         x: originX - previewWidth/2,
         y: originY - previewHeight/2,
-        scale: 1,
-        sourceX: 91,
-        sourceY: 200,
-        sourceWidth: previewWidth,
-        sourceHeight: previewHeight,
+        scale: previewWidth/232,
+        sourceX: 515,
+        sourceY: 4,
+        sourceWidth: 232,
+        sourceHeight: 212,
         type: Types.IMAGE,
         content: PROJECTS[0]
       }, {
         img: tilesheet,
         x: originX - previewWidth/2,
         y: originY - previewHeight/2,
-        scale: 1,
-        sourceX: 110,
-        sourceY: 413,
-        sourceWidth: previewWidth,
-        sourceHeight: previewHeight,
+        scale: previewWidth/232,
+        sourceX: 280,
+        sourceY: 0,
+        sourceWidth: 232,
+        sourceHeight: 214,
         type: Types.IMAGE,
         content: PROJECTS[1]
       }]
