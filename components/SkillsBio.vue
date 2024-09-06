@@ -27,7 +27,7 @@
     </div>
     <div id="default-tab-content">
       <TabContent id="all">
-        <div v-for="group in all" class="mb-8 flex gap-4 items-start">
+        <div v-for="group in all" class="mb-8 flex gap-4 items-center">
           <img
             :class="`h-${item.size}`"
             v-for="item in group"
@@ -36,7 +36,7 @@
         </div>
       </TabContent>
       <TabContent id="languages">
-        <div class="flex gap-4 items-start">
+        <div class="flex gap-4 items-center">
           <img
             :class="`h-${language.size}`"
             v-for="language in languages"
@@ -45,7 +45,7 @@
         </div>
       </TabContent>
       <TabContent id="backend-frameworks">
-        <div class="flex gap-4 items-start">
+        <div class="flex gap-4 items-center">
           <img
             :class="`h-${framework.size}`"
             v-for="framework in backendFrameworks"
@@ -54,7 +54,7 @@
         </div>
       </TabContent>
       <TabContent id="frontend-frameworks">
-        <div class="flex gap-4 items-start">
+        <div class="flex gap-4 items-center">
           <img
             :class="`h-${framework.size}`"
             v-for="framework in frontendFrameworks"
@@ -63,7 +63,7 @@
         </div>
       </TabContent>
       <TabContent id="cloud">
-        <div class="flex gap-4 items-start">
+        <div class="flex gap-4 items-center">
           <img
             :class="`h-${cloudService.size}`"
             v-for="cloudService in cloud"
@@ -72,7 +72,7 @@
         </div>
       </TabContent>
       <TabContent id="etc">
-        <div class="flex gap-4 items-start">
+        <div class="flex gap-4 items-center">
           <img
             :class="`h-${service.size}`"
             v-for="service in etc"
@@ -96,7 +96,7 @@
 
   const languages = [
     { name: 'ruby.png', size: 20 },
-    { name: 'golang.png', size: 20 },
+    { name: 'golang.png', size: 12 },
     { name: 'java.png', size: 20 },
     { name: 'javascript.png', size: 20 }
   ]
