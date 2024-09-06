@@ -1,5 +1,5 @@
 <template>
-  <section class="p-12">
+  <section class="px-16 pb-10">
     <h2 class="text-4xl mb-4">Skills</h2>
     <div class="mb-4">
       <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"

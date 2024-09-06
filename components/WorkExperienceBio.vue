@@ -1,5 +1,5 @@
 <template>
-  <section class="p-12">
+  <section class="px-16 pb-8">
     <h2 class="text-4xl mb-4">Work Experience</h2>
     <Timeline :events="experiences" />
   </section>

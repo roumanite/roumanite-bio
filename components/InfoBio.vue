@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="p-16">
+    <div class="px-16 pb-10">
       <h1 class="mb-4 text-4xl tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
         Hi! I'm Grace Ariel.
       </h1>
@@ -29,8 +29,10 @@
         and fosters continuous learning. I am always seeking opportunities that align with my values and support both my professional growth and my personal purpose of contributing to society.
         If you'd like to collaborate, feel free to reach out - it would be an honor to work with you.
       </p>
-      <p>
-        <a href="Grace_Ariel_resume.pdf" download>Download my resume</a>
+      <p class="mt-4 text-sky-500">
+        <a href="Grace_Ariel_resume.pdf" download>
+          Download my resume
+        </a>
       </p>
     </div>
   </section>
