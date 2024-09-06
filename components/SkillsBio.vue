@@ -1,7 +1,7 @@
 <template>
   <section class="p-12">
     <h2 class="text-4xl mb-4">Skills</h2>
-    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <div class="mb-4">
       <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
         id="default-tab"
         data-tabs-toggle="#default-tab-content"
@@ -27,33 +27,57 @@
     </div>
     <div id="default-tab-content">
       <TabContent id="all">
-        <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="item in all" :src="item">
+        <div v-for="group in all" class="mb-8 flex gap-4 items-start">
+          <img
+            :class="`h-${item.size}`"
+            v-for="item in group"
+            :src="item.name"
+          >
         </div>
       </TabContent>
       <TabContent id="languages">
         <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="language in languages" :src="language">
+          <img
+            :class="`h-${language.size}`"
+            v-for="language in languages"
+            :src="language.name"
+          >
         </div>
       </TabContent>
       <TabContent id="backend-frameworks">
         <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="framework in backendFrameworks" :src="framework">
+          <img
+            :class="`h-${framework.size}`"
+            v-for="framework in backendFrameworks"
+            :src="framework.name"
+          >
         </div>
       </TabContent>
       <TabContent id="frontend-frameworks">
         <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="framework in frontendFrameworks" :src="framework">
+          <img
+            :class="`h-${framework.size}`"
+            v-for="framework in frontendFrameworks"
+            :src="framework.name"
+          >
         </div>
       </TabContent>
       <TabContent id="cloud">
         <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="cloudService in cloud" :src="cloudService">
+          <img
+            :class="`h-${cloudService.size}`"
+            v-for="cloudService in cloud"
+            :src="cloudService.name"
+          >
         </div>
       </TabContent>
       <TabContent id="etc">
         <div class="flex gap-4 items-start">
-          <img class="h-20" v-for="service in etc" :src="service">
+          <img
+            :class="`h-${service.size}`"
+            v-for="service in etc"
+            :src="service.name"
+          >
         </div>
       </TabContent>
     </div>
@@ -70,10 +94,26 @@
       })
   })
 
-  const languages = ['ruby.png', 'golang.png', 'java.png', 'javascript.png']
-  const backendFrameworks = ['rails.png', 'spring.png']
-  const frontendFrameworks = ['react.png', 'reactnative.png']
-  const cloud = ['aws.png', 'kubernetes.png']
-  const etc = ['rabbitmq.png']
-  const all = languages.concat(backendFrameworks, frontendFrameworks, cloud, etc)
+  const languages = [
+    { name: 'ruby.png', size: 20 },
+    { name: 'golang.png', size: 20 },
+    { name: 'java.png', size: 20 },
+    { name: 'javascript.png', size: 20 }
+  ]
+  const backendFrameworks = [
+    { name: 'rails.png', size: 14 },
+    { name: 'spring.png', size: 12 }
+  ]
+  const frontendFrameworks = [
+    { name: 'react.png', size: 12 },
+    { name: 'reactnative.png', size: 12 }
+  ]
+  const cloud = [
+    { name: 'aws.png', size: 12 },
+    { name: 'kubernetes.png', size: 12 }
+  ]
+  const etc = [
+    { name: 'rabbitmq.png', size: 12 }
+  ]
+  const all = [languages, backendFrameworks, frontendFrameworks, cloud, etc]
 </script>
