@@ -20,14 +20,13 @@ jobs:
           node-version: 20
 
       - run: npm install
-      - run: npx nuxt build --preset netlify
 
-      - run: ls -a
+      - run: npx nuxt build --preset netlify
 
       - name: Publish
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=dist --debug --prod --build=false
+          args: deploy --dir=dist --debug --prod
         env:
           NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
