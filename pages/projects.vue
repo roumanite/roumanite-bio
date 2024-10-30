@@ -31,7 +31,7 @@
   const bunnyHeight = 297
   const previewWidth = 100
   const previewHeight = 100
-  const selected = useState('selected', () => null)
+  const selected = ref(null)
 
   onMounted(() => {
     const canvas = document.querySelector("canvas")
