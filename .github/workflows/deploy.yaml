@@ -26,9 +26,10 @@ jobs:
 
       - uses: nwtgck/actions-netlify@v2.0
         with:
-         publish-dir: dist
-         production-deploy: true
-         fails-without-credentials: true
+          functions-dir: .netlify
+          publish-dir: dist
+          production-deploy: true
+          fails-without-credentials: true
         env:
-         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-         NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
