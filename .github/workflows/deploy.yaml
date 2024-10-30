@@ -24,11 +24,10 @@ jobs:
 
       - run: ls -a
 
-      - uses: nwtgck/actions-netlify@v2.0
+      - name: Publish
+        uses: netlify/actions/cli@master
         with:
-          publish-dir: .output/public
-          production-deploy: true
-          fails-without-credentials: true
+          args: deploy --dir=dist --debug --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
