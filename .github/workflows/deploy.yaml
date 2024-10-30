@@ -26,7 +26,7 @@ jobs:
 
       - uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: .nuxt/dist
+          publish-dir: .output/public
           production-deploy: true
           fails-without-credentials: true
         env:
