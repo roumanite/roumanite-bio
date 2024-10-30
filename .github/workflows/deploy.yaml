@@ -20,12 +20,13 @@ jobs:
           node-version: 20
 
       - run: npm install
-      - run: NUXT_APP_BASE_URL=/roumanite-bio/ npx nuxt build --preset netlify
+      - run: npx nuxt build --preset netlify
 
       - uses: nwtgck/actions-netlify@v2.0
         with:
          publish-dir: ./dist
          production-deploy: true
+         fails-without-credentials: true
         env:
          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
          NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
