@@ -15,7 +15,17 @@
           </p>
         </div>
       </div>
-      <canvas style="background-color:yellow"></canvas>
+      <div class="flex flex-col lg:flex-row">
+        <div class="flex-1 grow">
+          <canvas id="bio-canvas" style="background-color:yellow"></canvas>
+        </div>
+        <div class="flex-1 grow">
+          <canvas id="project-canvas" style="background-color:green"></canvas>
+        </div>
+        <div class="flex-1 grow">
+          <canvas id="blog-canvas" style="background-color:aqua"></canvas>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -27,17 +37,23 @@
     layout: false,
   })
 
-  const sprites = []
+  const bioSprites = []
+  const projectSprites = []
+  const blogSprites = []
   const bunnyWidth = 179
   const bunnyHeight = 244
 
   onMounted(() => {
-    const canvas = document.querySelector("canvas")
-    resizeCanvas(canvas)
-    window.onresize = () => resizeCanvas(canvas)
+    const bioCanvas = document.getElementById('bio-canvas')
+    const projectCanvas = document.getElementById('project-canvas')
+    const blogCanvas = document.getElementById('blog-canvas')
+    resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
+    window.onresize = () => {
+      resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
+    }
     const tilesheet = loadTilesheet('work_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
-        sprites.push({
+        bioSprites.push({
           img: tilesheet,
           sourceX: (i % 4) * 179 + (i % 4) * 1,
           sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
@@ -47,7 +63,7 @@
         })
       });
       [ ...Array(12) ].forEach((_, i) => {
-        sprites.push({
+        projectSprites.push({
           img: tilesheet,
           sourceX: (i % 4) * 179 + (i % 4) * 1,
           sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
@@ -57,7 +73,7 @@
         })
       });
       [ ...Array(12) ].forEach((_, i) => {
-        sprites.push({
+        blogSprites.push({
           img: tilesheet,
           sourceX: (i % 4) * 179 + (i % 4) * 1,
           sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
@@ -66,14 +82,19 @@
           type: Types.IMAGE
         })
       });
-      update(canvas)
+      update(bioCanvas, bioSprites)
     })
   })
 
-  const resizeCanvas = (canvas) => {
-    canvas.width = window.innerWidth
-    const header = document.getElementById("header1")
-    canvas.height = window.innerHeight - header.clientHeight
+  const resizeCanvas = (canvases) => {
+    canvases.forEach((canvas) => {
+      canvas.width = canvas.offsetWidth
+      const gap = 30
+      const containerWidth = (canvas.offsetWidth - gap * 3/2)
+      const finalBWidth = (containerWidth - 3 * 15)/4
+      const finalBHeight = finalBWidth/bunnyWidth * bunnyHeight
+      canvas.height = finalBHeight * 3 + 15 * 3
+    })
   }
 
   const loadTilesheet = (filename, loadHandler) => {
@@ -83,32 +104,22 @@
     return tilesheet;
   }
 
-  const update = (canvas) =>{
-    requestAnimationFrame(() => update(canvas))
-    render(canvas)
+  const update = (canvas, sprites) =>{
+    requestAnimationFrame(() => update(canvas, sprites))
+    render(canvas, sprites)
   }
 
-  const render = (canvas) => {
+  const render = (canvas, sprites) => {
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
     const gap = 30
-    const containerWidth = (canvas.width - gap * 4)/3
+    const containerWidth = (canvas.offsetWidth - gap * 3/2)
     const finalBWidth = (containerWidth - 3 * 15)/4
 
     sprites.forEach((sprite, i) => {
       sprite.scale = finalBWidth/bunnyWidth
-      let col = 1
-      let row = 1
-      let n = i
-      if (i > 11 && i < 24) {
-        col = 2
-        n -= 12
-      } else if (i > 23) {
-        col = 3
-        n -= 24
-      }
-      sprite.x = (n % 4) * (bunnyWidth * sprite.scale) + gap * col + n % 4 * 15 + containerWidth * (col - 1)
-      sprite.y = Math.floor(n/4) * (bunnyHeight * sprite.scale) + gap + Math.floor(n/4) * 15
+      sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + gap + i % 4 * 15
+      sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + gap + Math.floor(i/4) * 15
       switch (sprite.type) {
         case Types.RECTANGLE:
           ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'

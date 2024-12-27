@@ -14,3 +14,7 @@ html {
 #__nuxt {
   @apply h-full;
 }
+
+#bio-canvas, #project-canvas, #blog-canvas {
+  width: 100%;
+}
