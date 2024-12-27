@@ -40,8 +40,8 @@
   const bioSprites = []
   const projectSprites = []
   const blogSprites = []
-  const bunnyWidth = 179
-  const bunnyHeight = 244
+  const bunnyWidth = 240
+  const bunnyHeight = 320
 
   onMounted(() => {
     const bioCanvas = document.getElementById('bio-canvas')
@@ -55,8 +55,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         bioSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * 179 + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyWidth + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -65,8 +65,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         projectSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * 179 + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyWidth + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -75,8 +75,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         blogSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * 179 + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyHeight + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * bunnyWidth + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
