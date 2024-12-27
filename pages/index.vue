@@ -33,21 +33,14 @@
 
   onMounted(() => {
     const canvas = document.querySelector("canvas")
-    const header = document.getElementById("header1")
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - header.clientHeight
-
-    const containerWidth = (canvas.width - 50 * 4)/3
-    const finalBWidth = (containerWidth - 3 * 15)/4
+    resizeCanvas(canvas)
+    window.onresize = () => resizeCanvas(canvas)
     const tilesheet = loadTilesheet('work_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
         sprites.push({
           img: tilesheet,
-          x: (i % 4) * (bunnyWidth * 1/2) + 50 + i%4 * 15,
-          y: Math.floor(i/4) * (bunnyHeight * 1/2) + 50 + Math.floor(i/4) * 15,
-          scale: finalBWidth/bunnyWidth,
-          sourceX: (i % 4) * 179,
-          sourceY: Math.floor(i/4) * 244,
+          sourceX: (i % 4) * 179 + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -56,11 +49,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         sprites.push({
           img: tilesheet,
-          x: (i % 4) * (bunnyWidth * 1/2) + 50 * 2 + i%4 * 15 + containerWidth,
-          y: Math.floor(i/4) * (bunnyHeight * 1/2) + 50 + Math.floor(i/4) * 15,
-          scale: finalBWidth/bunnyWidth,
-          sourceX: (i % 4) * 179,
-          sourceY: Math.floor(i/4) * 244,
+          sourceX: (i % 4) * 179 + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -69,11 +59,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         sprites.push({
           img: tilesheet,
-          x: (i % 4) * (bunnyWidth * 1/2) + 50 * 3+ i%4 * 15 + containerWidth * 2,
-          y: Math.floor(i/4) * (bunnyHeight * 1/2) + 50 + Math.floor(i/4) * 15,
-          scale: finalBWidth/bunnyWidth,
-          sourceX: (i % 4) * 179,
-          sourceY: Math.floor(i/4) * 244,
+          sourceX: (i % 4) * 179 + (i % 4) * 1,
+          sourceY: Math.floor(i/4) * 244 + Math.floor(i/4) * 1,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -82,6 +69,12 @@
       update(canvas)
     })
   })
+
+  const resizeCanvas = (canvas) => {
+    canvas.width = window.innerWidth
+    const header = document.getElementById("header1")
+    canvas.height = window.innerHeight - header.clientHeight
+  }
 
   const loadTilesheet = (filename, loadHandler) => {
     const tilesheet = new Image();
@@ -98,7 +91,24 @@
   const render = (canvas) => {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    sprites.forEach(sprite => {
+    const gap = 30
+    const containerWidth = (canvas.width - gap * 4)/3
+    const finalBWidth = (containerWidth - 3 * 15)/4
+
+    sprites.forEach((sprite, i) => {
+      sprite.scale = finalBWidth/bunnyWidth
+      let col = 1
+      let row = 1
+      let n = i
+      if (i > 11 && i < 24) {
+        col = 2
+        n -= 12
+      } else if (i > 23) {
+        col = 3
+        n -= 24
+      }
+      sprite.x = (n % 4) * (bunnyWidth * sprite.scale) + gap * col + n % 4 * 15 + containerWidth * (col - 1)
+      sprite.y = Math.floor(n/4) * (bunnyHeight * sprite.scale) + gap + Math.floor(n/4) * 15
       switch (sprite.type) {
         case Types.RECTANGLE:
           ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'
