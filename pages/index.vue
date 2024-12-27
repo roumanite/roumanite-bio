@@ -15,7 +15,7 @@
           </p>
         </div>
       </div>
-      <div class="flex flex-col lg:flex-row">
+      <div class="flex flex-col lg:flex-row gap-4 px-4">
         <div class="flex-1 grow">
           <canvas id="bio-canvas" style="background-color:yellow"></canvas>
         </div>
@@ -90,10 +90,10 @@
     canvases.forEach((canvas) => {
       canvas.width = canvas.offsetWidth
       const gap = 30
-      const containerWidth = (canvas.offsetWidth - gap * 3/2)
+      const containerWidth = (canvas.offsetWidth)
       const finalBWidth = (containerWidth - 3 * 15)/4
       const finalBHeight = finalBWidth/bunnyWidth * bunnyHeight
-      canvas.height = finalBHeight * 3 + 15 * 3
+      canvas.height = finalBHeight * 3 + 15 * 2
     })
   }
 
@@ -112,14 +112,13 @@
   const render = (canvas, sprites) => {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
-    const gap = 30
-    const containerWidth = (canvas.offsetWidth - gap * 3/2)
+    const containerWidth = (canvas.offsetWidth)
     const finalBWidth = (containerWidth - 3 * 15)/4
 
     sprites.forEach((sprite, i) => {
       sprite.scale = finalBWidth/bunnyWidth
-      sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + gap + i % 4 * 15
-      sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + gap + Math.floor(i/4) * 15
+      sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + i % 4 * 15
+      sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + Math.floor(i/4) * 15
       switch (sprite.type) {
         case Types.RECTANGLE:
           ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'
