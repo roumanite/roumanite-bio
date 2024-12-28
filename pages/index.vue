@@ -21,8 +21,19 @@
             id="bio-canvas"
             style="background-color:yellow"
             @click="$router.push('bio')"
+            @mouseover="showAboutMe = true"
+            @mouseleave="showAboutMe = false"
           ></canvas>
-          <div class="text-abt-me absolute"><h1 class="text-4xl">About Me</h1></div>
+          <div
+            class="text-abt-me absolute"
+            v-show="showAboutMe"
+            @mouseover="showAboutMe = true"
+            @mouseleave="showAboutMe = false"
+          >
+            <h1 class="text-4xl">
+              About Me
+            </h1>
+          </div>
         </div>
         <div class="flex-1 grow">
           <canvas id="project-canvas" style="background-color:green"></canvas>
@@ -42,6 +53,7 @@
     layout: false,
   })
 
+  const showAboutMe = ref(false)
   const bioSprites = []
   const projectSprites = []
   const blogSprites = []
