@@ -107,7 +107,6 @@
   const resizeCanvas = (canvases) => {
     canvases.forEach((canvas) => {
       canvas.width = canvas.offsetWidth
-      const gap = 30
       const containerWidth = (canvas.offsetWidth)
       const finalBWidth = (containerWidth - 3 * 15)/4
       const finalBHeight = finalBWidth/bunnyWidth * bunnyHeight
