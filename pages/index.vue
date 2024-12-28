@@ -15,9 +15,14 @@
           </p>
         </div>
       </div>
-      <div class="flex flex-col lg:flex-row gap-4 px-4">
-        <div class="flex-1 grow">
-          <canvas id="bio-canvas" style="background-color:yellow"></canvas>
+      <div class="flex flex-col lg:flex-row gap-4 px-4 pb-4">
+        <div class="flex-1 grow relative">
+          <canvas
+            id="bio-canvas"
+            style="background-color:yellow"
+            @click="$router.push('bio')"
+          ></canvas>
+          <div class="text-abt-me absolute"><h1 class="text-4xl">About Me</h1></div>
         </div>
         <div class="flex-1 grow">
           <canvas id="project-canvas" style="background-color:green"></canvas>
