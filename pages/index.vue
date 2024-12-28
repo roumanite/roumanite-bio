@@ -100,7 +100,7 @@
           type: Types.IMAGE
         })
       });
-      update(bioCanvas, bioSprites)
+      animate(bioCanvas, bioSprites)
     })
   })
 
@@ -122,9 +122,9 @@
     return tilesheet;
   }
 
-  const update = (canvas, sprites) =>{
-    requestAnimationFrame(() => update(canvas, sprites))
+  const animate = (canvas, sprites) =>{
     render(canvas, sprites)
+    requestAnimationFrame(() => animate(canvas, sprites))
   }
 
   const render = (canvas, sprites) => {
