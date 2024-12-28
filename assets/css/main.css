@@ -17,6 +17,7 @@ html {
 
 #bio-canvas, #project-canvas, #blog-canvas {
   width: 100%;
+  cursor: pointer;
 }
 
 .text-abt-me {
@@ -29,4 +30,5 @@ html {
   align-items: center;
   justify-content: center;
   display: flex;
+  cursor: pointer;
 }

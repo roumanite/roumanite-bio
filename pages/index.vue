@@ -27,6 +27,7 @@
           <div
             class="text-abt-me absolute"
             v-show="showAboutMe"
+            @click="$router.push('bio')"
             @mouseover="showAboutMe = true"
             @mouseleave="showAboutMe = false"
           >
