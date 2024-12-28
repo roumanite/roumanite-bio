@@ -73,8 +73,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         bioSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * bunnyWidth + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
+          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -83,8 +83,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         projectSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * bunnyWidth + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
+          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -93,8 +93,8 @@
       [ ...Array(12) ].forEach((_, i) => {
         blogSprites.push({
           img: tilesheet,
-          sourceX: (i % 4) * bunnyHeight + (i % 4) * 1,
-          sourceY: Math.floor(i/4) * bunnyWidth + Math.floor(i/4) * 1,
+          sourceX: (i % 4) * bunnyHeight + (i % 4) * 3,
+          sourceY: Math.floor(i/4) * bunnyWidth + Math.floor(i/4) * 3,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
