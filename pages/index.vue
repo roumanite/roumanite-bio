@@ -131,37 +131,45 @@
   }
 
   const render = (canvas, sprites) => {
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
-    const containerWidth = (canvas.offsetWidth)
-    const finalBWidth = (containerWidth - 3 * 15)/4
+    update(canvas, sprites)
+    draw(canvas, sprites)
+  }
+
+  const update = (canvas, sprites) => {
+    const finalBWidth = (canvas.width - 3 * 15)/4
 
     sprites.forEach((sprite, i) => {
+      sprite.scale = finalBWidth/bunnyWidth
       if (sprite.x === undefined) {
-        sprite.scale = finalBWidth/bunnyWidth
-        sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + i % 4 * 15
+        sprite.x = getOriginX(i, bunnyWidth, sprite.scale, 4, 15)
         sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + Math.floor(i/4) * 15
       } else if (canvas.offsetWidth !== oldCanvasWidth) {
         const oldX = sprite.x
         const oldBWidth = (oldCanvasWidth - 3*15)/4
         const oldScale = oldBWidth/bunnyWidth
-        const newScale = finalBWidth/bunnyWidth
-        const oldOriX = (i % 4) * (bunnyWidth * oldScale) + i % 4 * 15
-        const oriX = (i % 4) * (bunnyWidth * newScale) + i % 4 * 15
+        const oldOriX = getOriginX(i, bunnyWidth, oldScale, 4, 15)
+        const oriX = getOriginX(i, bunnyWidth, sprite.scale, 4, 15)
         let travel = oldX - oldOriX
         if (travel < 0) {
           travel = travel + oldCanvasWidth + 15
         }
-        const newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
+        const newTravel = Math.round(travel/oldCanvasWidth * canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
-        sprite.y = Math.floor(i/4) * (bunnyHeight * newScale) + Math.floor(i/4) * 15
+        sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
       } else if (showAboutMe.value) {
         sprite.x += 1
       }
       if (sprite.x > canvas.width) {
         sprite.x = sprite.x - bunnyWidth * sprite.scale * 4 - 15 * 4
       }
-      sprite.scale = finalBWidth/bunnyWidth
+    })
+  }
+
+  const draw = (canvas, sprites) => {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
+
+    sprites.forEach((sprite, _) => {
       switch (sprite.type) {
         case Types.RECTANGLE:
           ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'
@@ -194,4 +202,7 @@
       }
     })
   }
+
+  const getOriginX = (i, width, scale, cols, gap) => (i % cols) * width * scale + i % cols * gap
+  const getOriginY = (i, height, scale, cols, gap) => Math.floor(i/cols) * height * scale + Math.floor(i/cols) * gap
 </script>
