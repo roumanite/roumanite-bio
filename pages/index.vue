@@ -145,18 +145,15 @@
         const oldX = sprite.x
         const oldBWidth = (oldCanvasWidth - 3*15)/4
         const oldScale = oldBWidth/bunnyWidth
-        const oldOriX = (i % 4) * (bunnyWidth * oldScale) + i % 4 * 15
-        let travel = oldX - oldOriX
         const newScale = finalBWidth/bunnyWidth
-        let newTravel = 0
+        const oldOriX = (i % 4) * (bunnyWidth * oldScale) + i % 4 * 15
+        const oriX = (i % 4) * (bunnyWidth * newScale) + i % 4 * 15
+        let travel = oldX - oldOriX
         if (travel < 0) {
-          travel = oldCanvasWidth - oldOriX + oldX + 15
-          newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
-          sprite.x = newTravel - canvas.width + ((i % 4) * (bunnyWidth * newScale) + i % 4 * 15) - 15
-        } else {
-          newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
-          sprite.x = (i % 4) * (bunnyWidth * newScale) + i % 4 * 15 + newTravel
+          travel = travel + oldCanvasWidth + 15
         }
+        const newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
+        sprite.x = (oriX + newTravel) % (canvas.width + 15)
         sprite.y = Math.floor(i/4) * (bunnyHeight * newScale) + Math.floor(i/4) * 15
       } else if (showAboutMe.value) {
         sprite.x += 1
