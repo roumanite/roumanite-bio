@@ -60,12 +60,14 @@
   const blogSprites = []
   const bunnyWidth = 240
   const bunnyHeight = 320
+  let oldCanvasWidth = null
 
   onMounted(() => {
     const bioCanvas = document.getElementById('bio-canvas')
     const projectCanvas = document.getElementById('project-canvas')
     const blogCanvas = document.getElementById('blog-canvas')
     resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
+    oldCanvasWidth = bioCanvas.offsetWidth
     window.onresize = () => {
       resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
     }
@@ -101,6 +103,7 @@
         })
       });
       animate(bioCanvas, bioSprites)
+      render(projectCanvas, projectSprites)
     })
   })
 
@@ -123,6 +126,7 @@
 
   const animate = (canvas, sprites) =>{
     render(canvas, sprites)
+    oldCanvasWidth = canvas.offsetWidth
     requestAnimationFrame(() => animate(canvas, sprites))
   }
 
@@ -133,23 +137,60 @@
     const finalBWidth = (containerWidth - 3 * 15)/4
 
     sprites.forEach((sprite, i) => {
+      if (sprite.x === undefined) {
+        sprite.scale = finalBWidth/bunnyWidth
+        sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + i % 4 * 15
+        sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + Math.floor(i/4) * 15
+      } else if (canvas.offsetWidth !== oldCanvasWidth) {
+        const oldX = sprite.x
+        const oldBWidth = (oldCanvasWidth - 3*15)/4
+        const oldScale = oldBWidth/bunnyWidth
+        const oldOriX = (i % 4) * (bunnyWidth * oldScale) + i % 4 * 15
+        let travel = oldX - oldOriX
+        const newScale = finalBWidth/bunnyWidth
+        let newTravel = 0
+        if (travel < 0) {
+          travel = oldCanvasWidth - oldOriX + oldX + 15
+          newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
+          sprite.x = newTravel - canvas.width + ((i % 4) * (bunnyWidth * newScale) + i % 4 * 15) - 15
+        } else {
+          newTravel = Math.round(travel/oldCanvasWidth * containerWidth)
+          sprite.x = (i % 4) * (bunnyWidth * newScale) + i % 4 * 15 + newTravel
+        }
+        sprite.y = Math.floor(i/4) * (bunnyHeight * newScale) + Math.floor(i/4) * 15
+      } else if (showAboutMe.value) {
+        sprite.x += 1
+      }
+      if (sprite.x > canvas.width) {
+        sprite.x = sprite.x - bunnyWidth * sprite.scale * 4 - 15 * 4
+      }
       sprite.scale = finalBWidth/bunnyWidth
-      sprite.x = (i % 4) * (bunnyWidth * sprite.scale) + i % 4 * 15
-      sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + Math.floor(i/4) * 15
       switch (sprite.type) {
         case Types.RECTANGLE:
           ctx.fillStyle = 'rgba(10, 30, 100, 0.5)'
           ctx.fillRect(sprite.x, sprite.y, previewWidth, previewHeight)
           break
         case Types.IMAGE:
+          const scaledWidth = sprite.sourceWidth * sprite.scale
+          const scaledHeight = sprite.sourceHeight * sprite.scale
           ctx.drawImage(
             sprite.img,
             sprite.sourceX, sprite.sourceY,
             sprite.sourceWidth, sprite.sourceHeight,
             sprite.x,
             sprite.y,
-            sprite.sourceWidth * sprite.scale, sprite.sourceHeight * sprite.scale,
+            scaledWidth, scaledHeight,
           )
+          if (sprite.x + scaledWidth > canvas.width) {
+            const overflow = (sprite.x + scaledWidth) - canvas.width;
+            ctx.drawImage(
+              sprite.img,
+              sprite.sourceX, sprite.sourceY,
+              sprite.sourceWidth, sprite.sourceHeight,
+              -scaledWidth + overflow - 15, sprite.y,
+              scaledWidth, scaledHeight
+            );
+          }
           break
         default:
           break
