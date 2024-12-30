@@ -11,7 +11,7 @@
             You're looking at Grace Ariel's personal website
           </p>
           <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl px-16 dark:text-gray-400">
-            To explore, hover over the bunnies to start!
+            To start exploring, hover over the bunnies!
           </p>
         </div>
       </div>
