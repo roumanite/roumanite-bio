@@ -70,6 +70,10 @@
     oldCanvasWidth = bioCanvas.offsetWidth
     window.onresize = () => {
       resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
+      render(bioCanvas, bioSprites)
+      render(projectCanvas, projectSprites)
+      render(blogCanvas, blogSprites)
+      oldCanvasWidth = bioCanvas.offsetWidth
     }
     const tilesheet = loadTilesheet('work_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
@@ -82,9 +86,12 @@
           type: Types.IMAGE
         })
       });
+      render(bioCanvas, bioSprites)
+    })
+    const tilesheet2 = loadTilesheet('project_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
         projectSprites.push({
-          img: tilesheet,
+          img: tilesheet2,
           sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
           sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
           sourceWidth: bunnyWidth,
@@ -92,18 +99,20 @@
           type: Types.IMAGE
         })
       });
+      render(projectCanvas, projectSprites)
+    })
+    const tilesheet3 = loadTilesheet('author_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
         blogSprites.push({
-          img: tilesheet,
-          sourceX: (i % 4) * bunnyHeight + (i % 4) * 3,
-          sourceY: Math.floor(i/4) * bunnyWidth + Math.floor(i/4) * 3,
+          img: tilesheet3,
+          sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
+          sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
         })
       });
-      animate(bioCanvas, bioSprites)
-      render(projectCanvas, projectSprites)
+      render(blogCanvas, blogSprites)
     })
   })
 
@@ -126,7 +135,6 @@
 
   const animate = (canvas, sprites) =>{
     render(canvas, sprites)
-    oldCanvasWidth = canvas.offsetWidth
     requestAnimationFrame(() => animate(canvas, sprites))
   }
 
