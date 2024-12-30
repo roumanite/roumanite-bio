@@ -21,15 +21,15 @@
             id="bio-canvas"
             style="background-color:yellow"
             @click="$router.push('bio')"
-            @mouseover="showAboutMe = true"
-            @mouseleave="showAboutMe = false"
+            @mouseover="toggleShowAboutMe(true)"
+            @mouseleave="toggleShowAboutMe(false)"
           ></canvas>
           <div
             class="text-abt-me absolute"
             v-show="showAboutMe"
             @click="$router.push('bio')"
-            @mouseover="showAboutMe = true"
-            @mouseleave="showAboutMe = false"
+            @mouseover="toggleShowAboutMe(true)"
+            @mouseleave="toggleShowAboutMe(false)"
           >
             <h1 class="text-4xl">
               About Me
@@ -116,6 +116,14 @@
     })
   })
 
+  const toggleShowAboutMe = (val) => {
+    showAboutMe.value = val
+    if (showAboutMe.value) {
+      const bioCanvas = document.getElementById('bio-canvas')
+      animate(bioCanvas, bioSprites, showAboutMe)
+    }
+  }
+
   const resizeCanvas = (canvases) => {
     canvases.forEach((canvas) => {
       canvas.width = canvas.offsetWidth
@@ -133,9 +141,11 @@
     return tilesheet;
   }
 
-  const animate = (canvas, sprites) =>{
+  const animate = (canvas, sprites, stateRef) => {
     render(canvas, sprites)
-    requestAnimationFrame(() => animate(canvas, sprites))
+    if (stateRef.value) {
+      requestAnimationFrame(() => animate(canvas, sprites, stateRef))
+    }
   }
 
   const render = (canvas, sprites) => {
