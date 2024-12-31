@@ -81,6 +81,8 @@
           img: tilesheet,
           sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
           sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
+          speedX: 0,
+          speedY: 0,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -94,6 +96,8 @@
           img: tilesheet2,
           sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
           sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
+          speedX: 0,
+          speedY: 0,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -107,6 +111,8 @@
           img: tilesheet3,
           sourceX: (i % 4) * bunnyWidth + (i % 4) * 3,
           sourceY: Math.floor(i/4) * bunnyHeight + Math.floor(i/4) * 3,
+          speedX: 0,
+          speedY: 0,
           sourceWidth: bunnyWidth,
           sourceHeight: bunnyHeight,
           type: Types.IMAGE
@@ -120,7 +126,10 @@
     showAboutMe.value = val
     if (showAboutMe.value) {
       const bioCanvas = document.getElementById('bio-canvas')
+      bioSprites.forEach((sprite) => sprite.speedX = 1)
       animate(bioCanvas, bioSprites, showAboutMe)
+    } else {
+      bioSprites.forEach((sprite) => sprite.speedX = 0)
     }
   }
 
@@ -166,9 +175,9 @@
         const newTravel = scaleDistance(travel, oldCanvasWidth, canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
         sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
-      } else if (showAboutMe.value) {
-        sprite.x += 1
       }
+      sprite.x += sprite.speedX
+      sprite.y += sprite.speedY
       if (sprite.x > canvas.width) {
         sprite.x = sprite.x - bunnyWidth * sprite.scale * 4 - 15 * 4
       }
