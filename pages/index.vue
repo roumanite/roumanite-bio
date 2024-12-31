@@ -127,10 +127,8 @@
   const resizeCanvas = (canvases) => {
     canvases.forEach((canvas) => {
       canvas.width = canvas.offsetWidth
-      const containerWidth = (canvas.offsetWidth)
-      const finalBWidth = (containerWidth - 3 * 15)/4
-      const finalBHeight = finalBWidth/bunnyWidth * bunnyHeight
-      canvas.height = finalBHeight * 3 + 15 * 2
+      const resizedHeight = getBunnyHeight(canvas.width, 4, 15)
+      canvas.height = resizedHeight * 3 + 15 * 2
     })
   }
 
@@ -154,23 +152,17 @@
   }
 
   const update = (canvas, sprites) => {
-    const finalBWidth = (canvas.width - 3 * 15)/4
-
     sprites.forEach((sprite, i) => {
-      sprite.scale = finalBWidth/bunnyWidth
+      sprite.scale = getBunnyWidth(canvas.width, 4, 15)/bunnyWidth
       if (sprite.x === undefined) {
         sprite.x = getOriginX(i, bunnyWidth, sprite.scale, 4, 15)
         sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
       } else if (canvas.offsetWidth !== oldCanvasWidth) {
         const oldX = sprite.x
-        const oldBWidth = (oldCanvasWidth - 3*15)/4
-        const oldScale = oldBWidth/bunnyWidth
+        const oldScale = getBunnyWidth(oldCanvasWidth, 4, 15)/bunnyWidth
         const oldOriX = getOriginX(i, bunnyWidth, oldScale, 4, 15)
         const oriX = getOriginX(i, bunnyWidth, sprite.scale, 4, 15)
-        let travel = oldX - oldOriX
-        if (travel < 0) {
-          travel = travel + oldCanvasWidth + 15
-        }
+        const travel = getDistance(oldCanvasWidth, 15, oldX, oldOriX)
         const newTravel = scaleDistance(travel, oldCanvasWidth, canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
         sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
@@ -181,6 +173,26 @@
         sprite.x = sprite.x - bunnyWidth * sprite.scale * 4 - 15 * 4
       }
     })
+  }
+
+  const getBunnyWidth = (canvasWidth, cols, gap) => (canvasWidth - (cols-1) * gap)/cols
+
+  const getBunnyHeight = (canvasWidth, cols, gap) => {
+    const width = getBunnyWidth(canvasWidth, cols, gap)
+    return width/bunnyWidth * bunnyHeight
+  }
+
+  const getDistance = (
+    canvasLength,
+    gap,
+    coordinate,
+    originCoordinate
+  ) => {
+    let travel = coordinate - originCoordinate
+    if (travel < 0) {
+      travel = travel + canvasLength + gap
+    }
+    return travel
   }
 
   const scaleDistance = (oldDistance, oldCanvasLength, newCanvasLength) => {
