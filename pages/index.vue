@@ -160,7 +160,7 @@
       sprite.scale = finalBWidth/bunnyWidth
       if (sprite.x === undefined) {
         sprite.x = getOriginX(i, bunnyWidth, sprite.scale, 4, 15)
-        sprite.y = Math.floor(i/4) * (bunnyHeight * sprite.scale) + Math.floor(i/4) * 15
+        sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
       } else if (canvas.offsetWidth !== oldCanvasWidth) {
         const oldX = sprite.x
         const oldBWidth = (oldCanvasWidth - 3*15)/4
@@ -171,7 +171,7 @@
         if (travel < 0) {
           travel = travel + oldCanvasWidth + 15
         }
-        const newTravel = Math.round(travel/oldCanvasWidth * canvas.width)
+        const newTravel = scaleDistance(travel, oldCanvasWidth, canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
         sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
       } else if (showAboutMe.value) {
@@ -182,6 +182,10 @@
       }
     })
   }
+
+  const scaleDistance = (oldDistance, oldCanvasLength, newCanvasLength) => {
+    return Math.round(oldDistance/oldCanvasLength * newCanvasLength)
+  } 
 
   const draw = (canvas, sprites) => {
     const ctx = canvas.getContext("2d");
