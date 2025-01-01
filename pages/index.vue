@@ -130,25 +130,27 @@
   })
 
   const toggleShowAboutMe = (val) => {
+    const previousValue = showAboutMe.value
     showAboutMe.value = val
-    if (val) {
+    if (val && !previousValue) {
       const bioCanvas = document.getElementById('bio-canvas')
       bioSprites.slice(0, 4).forEach((sprite) => sprite.speedX = -1)
       bioSprites.slice(4, 8).forEach((sprite) => sprite.speedX = 1)
       bioSprites.slice(8).forEach((sprite) => sprite.speedX = -1)
       animate(bioCanvas, bioSprites, showAboutMe)
-    } else {
+    } else if (!val) {
       bioSprites.forEach((sprite) => sprite.speedX = 0)
     }
   }
 
   const toggleShowProjects = (val) => {
+    const previousValue = showProjects.value
     showProjects.value = val
-    if (val) {
+    if (val && !previousValue) {
       const projectCanvas = document.getElementById('project-canvas')
       projectSprites.forEach((sprite, i) => sprite.speedY = i % 2 === 0 ? -1 : 1)
       animate(projectCanvas, projectSprites, showProjects)
-    } else {
+    } else if (!val) {
       projectSprites.forEach((sprite) => sprite.speedX = 0)
     }
   }
