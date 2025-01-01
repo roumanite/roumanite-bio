@@ -27,26 +27,23 @@
           />
         </div>
         <div class="flex-1 grow relative">
-          <canvas
+          <OverlayedCanvas
             id="project-canvas"
-            @mouseover="toggleShowProjects(true)"
-            @mouseleave="toggleShowProjects(false)"
-          >
-          </canvas>
-          <div
-            class="text-abt-me absolute"
-            v-show="showProjects"
+            :showOverlay="showProjects"
+            text="Projects"
             @click="$router.push('projects')"
             @mouseover="toggleShowProjects(true)"
             @mouseleave="toggleShowProjects(false)"
-          >
-            <h1 class="text-4xl">
-              Projects
-            </h1>
-          </div>
+          />
         </div>
-        <div class="flex-1 grow">
-          <canvas id="blog-canvas" style="background-color:aqua"></canvas>
+        <div class="flex-1 grow relative">
+          <OverlayedCanvas
+            id="blog-canvas"
+            :showOverlay="showBlog"
+            text="Coming Soon"
+            @mouseover="toggleShowBlog(true)"
+            @mouseleave="toggleShowBlog(false)"
+          />
         </div>
       </div>
     </section>
@@ -62,6 +59,7 @@
 
   const showAboutMe = ref(false)
   const showProjects = ref(false)
+  const showBlog = ref(false)
   const bioSprites = []
   const projectSprites = []
   const blogSprites = []
@@ -153,6 +151,10 @@
     } else {
       projectSprites.forEach((sprite) => sprite.speedX = 0)
     }
+  }
+
+  const toggleShowBlog = (val) => {
+    showBlog.value = val
   }
 
   const resizeCanvas = (canvases) => {
