@@ -78,7 +78,7 @@
   const blogSprites = []
   const bunnyWidth = 240
   const bunnyHeight = 320
-  let oldCanvasWidth = null
+  let oldCanvasWidth, oldCanvasHeight = undefined
 
   onMounted(() => {
     const bioCanvas = document.getElementById('bio-canvas')
@@ -86,12 +86,14 @@
     const blogCanvas = document.getElementById('blog-canvas')
     resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
     oldCanvasWidth = bioCanvas.offsetWidth
+    oldCanvasHeight = bioCanvas.offsetHeight
     window.onresize = () => {
       resizeCanvas([bioCanvas, projectCanvas, blogCanvas])
       render(bioCanvas, bioSprites)
       render(projectCanvas, projectSprites)
       render(blogCanvas, blogSprites)
       oldCanvasWidth = bioCanvas.offsetWidth
+      oldCanvasHeight = bioCanvas.offsetHeight
     }
     const tilesheet = loadTilesheet('work_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
@@ -205,7 +207,13 @@
         const travel = getDistance(oldCanvasWidth, 15, oldX, oldOriX)
         const newTravel = scaleDistance(travel, oldCanvasWidth, canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
-        sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
+
+        const oldY = sprite.y
+        const oldOriY = getOriginY(i, bunnyHeight, oldScale, 4, 15)
+        const oriY = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
+        const travelY = getDistance(oldCanvasHeight, 15, oldY, oldOriY)
+        const newTravelY = scaleDistance(travelY, oldCanvasHeight, canvas.height)
+        sprite.y = (oriY + newTravelY) % (canvas.height + 15)
       } else {
         sprite.x += sprite.speedX
         sprite.y += sprite.speedY
