@@ -17,29 +17,18 @@
       </div>
       <div class="flex flex-col lg:flex-row gap-4 px-4 pb-4">
         <div class="flex-1 grow relative">
-          <canvas
+          <OverlayedCanvas
             id="bio-canvas"
-            style="background-color:yellow"
+            :showOverlay="showAboutMe"
+            text="About Me"
             @click="$router.push('bio')"
             @mouseover="toggleShowAboutMe(true)"
             @mouseleave="toggleShowAboutMe(false)"
-          ></canvas>
-          <div
-            class="text-abt-me absolute"
-            v-show="showAboutMe"
-            @click="$router.push('bio')"
-            @mouseover="toggleShowAboutMe(true)"
-            @mouseleave="toggleShowAboutMe(false)"
-          >
-            <h1 class="text-4xl">
-              About Me
-            </h1>
-          </div>
+          />
         </div>
         <div class="flex-1 grow relative">
           <canvas
             id="project-canvas"
-            style="background-color:green"
             @mouseover="toggleShowProjects(true)"
             @mouseleave="toggleShowProjects(false)"
           >
