@@ -1,52 +1,72 @@
 <template>
-  <div>
-    <section class="dark:bg-gray-900 test2">
-      <div id="header1" class="flex py-8 px-4 mx-auto w-fit text-center lg:py-16">
-        <img class="rounded-full w-36 h-36" src="/assets/avatar.png" alt="Extra large avatar">
-        <div class="">
-          <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Hello World!
-          </h1>
-          <p class="text-lg font-normal text-gray-500 lg:text-xl px-16 dark:text-gray-400">
-            You're looking at Grace Ariel's personal website
-          </p>
-          <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl px-16 dark:text-gray-400">
-            To start exploring, hover over the bunnies!
-          </p>
-        </div>
+  <section class="flex flex-col md:flex-row md:items-start py-8 px-4 mx-auto w-fit text-center lg:py-16">
+    <!-- Text Content -->
+    <div class="order-1 md:order-2 w-full flex flex-col text-center md:text-left: md:mx-8">
+      <!-- Title -->
+      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">
+        Hello World!
+      </h1>
+      <!-- Image on Mobile (dynamic position) -->
+      <div class="order-2 md:order-none w-full text-center md:hidden mb-4">
+        <img
+          class="rounded-full w-36 h-36 mx-auto"
+          src="/assets/avatar.png"
+          alt="Image"
+        >
       </div>
-      <div class="flex flex-col lg:flex-row gap-4 px-4 pb-4">
-        <div class="flex-1 grow relative">
-          <OverlayedCanvas
-            id="bio-canvas"
-            :showOverlay="showAboutMe"
-            text="About Me"
-            @click="$router.push('bio')"
-            @mouseover="toggleShowAboutMe(true)"
-            @mouseleave="toggleShowAboutMe(false)"
-          />
-        </div>
-        <div class="flex-1 grow relative">
-          <OverlayedCanvas
-            id="project-canvas"
-            :showOverlay="showProjects"
-            text="Projects"
-            @click="$router.push('projects')"
-            @mouseover="toggleShowProjects(true)"
-            @mouseleave="toggleShowProjects(false)"
-          />
-        </div>
-        <div class="flex-1 grow relative">
-          <OverlayedCanvas
-            id="blog-canvas"
-            :showOverlay="showBlog"
-            text="Coming Soon"
-            @mouseover="toggleShowBlog(true)"
-            @mouseleave="toggleShowBlog(false)"
-          />
-        </div>
+      <!-- Description -->
+      <div class="order-3">
+        <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          You're looking at Grace Ariel's personal&nbsp;website
+        </p>
+        <p class="[@media(any-hover:hover)]:hidden text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          To start exploring, click the bunnies!
+        </p>
+        <p class="hidden [@media(any-hover:hover)]:block text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          To start exploring, hover over the bunnies!
+        </p>
       </div>
-    </section>
+    </div>
+
+    <!-- Image on Desktop -->
+    <div class="order-2 md:order-1 w-full md:w-1/3 text-center hidden md:block">
+      <img
+        class="rounded-full w-36 h-36 mx-auto"
+        src="/assets/avatar.png"
+        alt="Image"
+      >
+    </div>
+  </section>
+  <div class="flex flex-col lg:flex-row gap-4 px-4 pb-4">
+    <div class="flex-1 grow relative">
+      <OverlayedCanvas
+        id="bio-canvas"
+        :showOverlay="showAboutMe"
+        text="About Me"
+        @click="$router.push('bio')"
+        @mouseover="toggleShowAboutMe(true)"
+        @mouseleave="toggleShowAboutMe(false)"
+      />
+    </div>
+    <div class="flex-1 grow relative">
+      <OverlayedCanvas
+        id="project-canvas"
+        :showOverlay="showProjects"
+        text="Projects"
+        @click="$router.push('projects')"
+        @mouseover="toggleShowProjects(true)"
+        @mouseleave="toggleShowProjects(false)"
+      />
+    </div>
+    <div class="flex-1 grow relative">
+      <OverlayedCanvas
+        id="blog-canvas"
+        :showOverlay="showBlog"
+        text="Coming Soon"
+        @mouseover="toggleShowBlog(true)"
+        @mouseleave="toggleShowBlog(false)"
+      />
+    </div>
   </div>
 </template>
 <script setup>
@@ -66,6 +86,8 @@
   const bunnyWidth = 240
   const bunnyHeight = 320
   let oldCanvasWidth, oldCanvasHeight = undefined
+
+  const noHover = window && window.matchMedia('(any-hover: none)').matches
 
   onMounted(() => {
     const bioCanvas = document.getElementById('bio-canvas')
@@ -95,7 +117,11 @@
           type: Types.IMAGE
         })
       });
-      render(bioCanvas, bioSprites)
+      if (noHover) {
+        toggleShowAboutMe(true)
+      } else {
+        render(bioCanvas, bioSprites)
+      }
     })
     const tilesheet2 = loadTilesheet('project_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
@@ -110,7 +136,11 @@
           type: Types.IMAGE
         })
       });
-      render(projectCanvas, projectSprites)
+      if (noHover) {
+        toggleShowProjects(true)
+      } else {
+        render(projectCanvas, projectSprites)
+      }
     })
     const tilesheet3 = loadTilesheet('author_bunnies.png', () => {
       [ ...Array(12) ].forEach((_, i) => {
@@ -125,7 +155,11 @@
           type: Types.IMAGE
         })
       });
-      render(blogCanvas, blogSprites)
+      if (noHover) {
+        toggleShowBlog(true)
+      } else {
+        render(blogCanvas, blogSprites)
+      }
     })
   })
 
@@ -138,7 +172,7 @@
       bioSprites.slice(4, 8).forEach((sprite) => sprite.speedX = 1)
       bioSprites.slice(8).forEach((sprite) => sprite.speedX = -1)
       animate(bioCanvas, bioSprites, showAboutMe)
-    } else if (!val) {
+    } else if (!val && !noHover) {
       bioSprites.forEach((sprite) => sprite.speedX = 0)
     }
   }
@@ -157,6 +191,7 @@
 
   const toggleShowBlog = (val) => {
     showBlog.value = val
+    render(document.getElementById('blog-canvas'), blogSprites, showBlog)
   }
 
   const resizeCanvas = (canvases) => {
