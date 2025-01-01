@@ -36,8 +36,25 @@
             </h1>
           </div>
         </div>
-        <div class="flex-1 grow">
-          <canvas id="project-canvas" style="background-color:green"></canvas>
+        <div class="flex-1 grow relative">
+          <canvas
+            id="project-canvas"
+            style="background-color:green"
+            @mouseover="toggleShowProjects(true)"
+            @mouseleave="toggleShowProjects(false)"
+          >
+          </canvas>
+          <div
+            class="text-abt-me absolute"
+            v-show="showProjects"
+            @click="$router.push('projects')"
+            @mouseover="toggleShowProjects(true)"
+            @mouseleave="toggleShowProjects(false)"
+          >
+            <h1 class="text-4xl">
+              Projects
+            </h1>
+          </div>
         </div>
         <div class="flex-1 grow">
           <canvas id="blog-canvas" style="background-color:aqua"></canvas>
@@ -55,6 +72,7 @@
   })
 
   const showAboutMe = ref(false)
+  const showProjects = ref(false)
   const bioSprites = []
   const projectSprites = []
   const blogSprites = []
@@ -124,12 +142,25 @@
 
   const toggleShowAboutMe = (val) => {
     showAboutMe.value = val
-    if (showAboutMe.value) {
+    if (val) {
       const bioCanvas = document.getElementById('bio-canvas')
-      bioSprites.forEach((sprite) => sprite.speedX = 1)
+      bioSprites.slice(0, 4).forEach((sprite) => sprite.speedX = -1)
+      bioSprites.slice(4, 8).forEach((sprite) => sprite.speedX = 1)
+      bioSprites.slice(8).forEach((sprite) => sprite.speedX = -1)
       animate(bioCanvas, bioSprites, showAboutMe)
     } else {
       bioSprites.forEach((sprite) => sprite.speedX = 0)
+    }
+  }
+
+  const toggleShowProjects = (val) => {
+    showProjects.value = val
+    if (val) {
+      const projectCanvas = document.getElementById('project-canvas')
+      projectSprites.forEach((sprite, i) => sprite.speedY = i % 2 === 0 ? -1 : 1)
+      animate(projectCanvas, projectSprites, showProjects)
+    } else {
+      projectSprites.forEach((sprite) => sprite.speedX = 0)
     }
   }
 
@@ -175,11 +206,19 @@
         const newTravel = scaleDistance(travel, oldCanvasWidth, canvas.width)
         sprite.x = (oriX + newTravel) % (canvas.width + 15)
         sprite.y = getOriginY(i, bunnyHeight, sprite.scale, 4, 15)
+      } else {
+        sprite.x += sprite.speedX
+        sprite.y += sprite.speedY
       }
-      sprite.x += sprite.speedX
-      sprite.y += sprite.speedY
       if (sprite.x > canvas.width) {
         sprite.x = sprite.x - bunnyWidth * sprite.scale * 4 - 15 * 4
+      } else if (sprite.x < 0) {
+        sprite.x = sprite.x + bunnyWidth * sprite.scale * 4 + 15 * 4
+      }
+      if (sprite.y > canvas.height) {
+        sprite.y = sprite.y - bunnyHeight * sprite.scale * 3 - 15 * 3
+      } else if (sprite.y < 0) {
+        sprite.y = sprite.y + bunnyHeight * sprite.scale * 3 + 15 * 3
       }
     })
   }
@@ -229,13 +268,19 @@
             sprite.y,
             scaledWidth, scaledHeight,
           )
-          if (sprite.x + scaledWidth > canvas.width) {
-            const overflow = (sprite.x + scaledWidth) - canvas.width;
+          let overflowX, overflowY = undefined
+          if (sprite.x + scaledWidth > canvas.width + 1e-10) {
+            overflowX = sprite.x - canvas.width - 15;
+          }
+          if (sprite.y + scaledHeight > canvas.height + 1e-10) {
+            overflowY = sprite.y - canvas.height - 15;
+          }
+          if (overflowX !== undefined || overflowY !== undefined) {
             ctx.drawImage(
               sprite.img,
               sprite.sourceX, sprite.sourceY,
               sprite.sourceWidth, sprite.sourceHeight,
-              -scaledWidth + overflow - 15, sprite.y,
+              overflowX || sprite.x, overflowY || sprite.y,
               scaledWidth, scaledHeight
             );
           }
